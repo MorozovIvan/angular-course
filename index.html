@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="testApp">
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <div ng-controller="TextBlockController as textBlock">
+                <p ng-show="textBlock.visible">
+                    Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Donec sollicitudin molestie malesuada. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur aliquet quam id dui posuere blandit. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Nulla porttitor accumsan tincidunt.
+                </p>
+
+                <button ng-click="textBlock.hideShow()" class="btn btn-success">Show/Hide text</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
