@@ -2,21 +2,61 @@
 <html ng-app="testApp">
 <head>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8">
-            <div ng-controller="TextBlockController as textBlock">
-                <p ng-show="textBlock.visible">
-                    Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Donec sollicitudin molestie malesuada. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Curabitur aliquet quam id dui posuere blandit. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Nulla porttitor accumsan tincidunt.
-                </p>
+<div id="wrapper">
+    <div class="main" ng-controller="MainController">
+        <form ng-submit="addTask()">
+            <input type="text" ng-model="newTaskName">
+            <button type="submit" ng-disabled="!newTaskName">Add Task</button>
+        </form>
+        <table ng-if="taskList && taskList.length">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Done</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ALL</td>
+                <td><label><input type="checkbox" ng-model="checkAll" ng-click="checkAllPageTasks(checkAll)"></label></td>
+                <td><button class="delete" ng-click="removeAllPageTasks()">[X]</button></td>
+            </tr>
+            <tr ng-repeat="task in taskList | limitTo:countPerPage:currentPage | orderBy:'name':false track by $index" ng-class="{striped: task.done}">
+                <td>{{task.name}}</td>
+                <td>
+                    <label><input type="checkbox" ng-model="task.done" ng-checked="checkAll"></label>
+                </td>
+                <td>
+                    <button class="delete" ng-click="removeTask(task.id)">[X]</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-                <button ng-click="textBlock.hideShow()" class="btn btn-success">Show/Hide text</button>
-            </div>
+        <ul class="pagination">
+            <li ng-show="pageIndex > 0"><a href="#" ng-click="setPage(pageIndex > 0 ? pageIndex - 1 : 0)">«</a></li>
+
+            <li ng-repeat="page in range(pageCount) track by $index" ng-click="setPage($index)" ng-class="{'active':$index == pageIndex}">
+                <span>{{ $index+1 }}</span>
+            </li>
+
+            <li ng-show="pageIndex + 1 < pageCount"><a href="#" ng-click="setPage(pageIndex < pageCount ? pageIndex + 1 : pageCount)">»</a></li>
+        </ul>
+
+        <div ng-if="taskList && taskList.length">
+            <p>
+                Страница {{ pageIndex + 1 }} из {{ pageCount }}
+            </p>
+            <p>
+                Всего записей: {{ taskList.length }}
+            </p>
         </div>
     </div>
 </div>
