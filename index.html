@@ -17,7 +17,16 @@
         <table ng-if="taskList && taskList.length">
             <thead>
             <tr>
-                <th>Name</th>
+                <th>
+                    <a href="#" ng-click="sortType = 'name'; doSortReverse();">
+                        Name
+                        <span class="dropup" ng-show="sortReverse">
+                            <span ng-show="sortType == 'name'" class="caret"></span>
+                        </span>
+
+                        <span ng-show="sortType == 'name' && !sortReverse" class="caret"></span>
+                    </a>
+                </th>
                 <th>Done</th>
                 <th>Delete</th>
             </tr>
@@ -28,7 +37,7 @@
                 <td><label><input type="checkbox" ng-model="checkAll" ng-click="checkAllPageTasks(checkAll)"></label></td>
                 <td><button class="delete" ng-click="removeAllPageTasks()">[X]</button></td>
             </tr>
-            <tr ng-repeat="task in taskList | limitTo:countPerPage:currentPage | orderBy:'name':false track by $index" ng-class="{striped: task.done}">
+            <tr ng-repeat="task in taskList | limitTo:countPerPage:currentPage | orderBy:'name' track by $index" ng-class="{striped: task.done}">
                 <td>{{task.name}}</td>
                 <td>
                     <label><input type="checkbox" ng-model="task.done" ng-checked="checkAll"></label>

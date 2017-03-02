@@ -4,6 +4,7 @@
         .controller('MainController', ['$scope', function($scope) {
 
             $scope.countPerPage = 5;
+            $scope.sortReverse = false;
             $scope.offset = 0;
             $scope.pageIndex = 0;
             $scope.checkAll = 0;
@@ -26,6 +27,11 @@
                     });
                     $scope.newTaskName = '';
                 }
+            };
+
+            $scope.doSortReverse = function(){
+                $scope.sortReverse = !$scope.sortReverse;
+                $scope.taskList.reverse();
             };
 
             $scope.removeTask = function(taskId) {
